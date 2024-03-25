@@ -1,0 +1,115 @@
+asyncapi: 3.0.0
+
+info:
+  title: Product Availability Service
+  description: | 
+    This service is in charge of product stock lifecycle events.
+  license: 
+    name: Apache 2.0
+  version: 'v1.0'
+  tags:
+    - name: service
+      description: product service
+    - name: domain
+      description: Product Management
+
+servers: 
+  product-sns-topic:
+    host: https://sns.us-west-2.amazonaws.com
+    description: Amazon SNS Topic.
+    protocol: HTTPS
+
+defaultContentType: application/json
+
+channels:
+  productEventsChannel:
+    address: 'product.{productId}'
+    description: All Product warehousing and stock related events are distributed and broadcasted to the interested consumers.
+    title: Product events channel
+    messages:
+      ProductAvailabilityConfirmed:
+        summary: Product availability confirmed event
+        $ref: '#/components/messages/ProductAvailabilityConfirmed'
+
+operations: 
+  onProductAvailabilityConfirmation:
+    summary: Action to confirm a product availability.
+    description: The product availability will be verified for any order reated actions.
+    title: Product availability confirmation
+    channel:
+      $ref: '#/channels/productEventsChannel'
+    action: send
+    tags:
+      - name: product
+      - name: availabilityconfirmed
+
+components:
+  messages:
+    ProductAvailabilityConfirmed:
+      payload:
+        $ref: '#/components/schemas/ProductAvailabilityConfirmed'
+
+  schemas:
+    ProductId:
+      description: The unique identifier of an product
+      type: string
+      pattern: ^([A-Za-z0-9_-]{21})$
+
+    Product:
+      required:
+        - productId
+        - status
+      type: object
+      description: product model
+      properties:
+        productId:
+          "$ref": "#/components/schemas/ProductId"
+        status:
+          "$ref": "#/components/schemas/Status"
+      title: Product
+
+    EventEnvelope:
+      type: object
+      allOf:
+      - $ref: 'https://raw.githubusercontent.com/cloudevents/spec/v1.0.1/spec.json'
+      properties:
+        id:
+          type: string
+          format: uuid
+        idempotencykey:
+          type: string
+          format: uuid
+        correlationid:
+          type: string
+          format: uuid
+        causationid:
+          type: string
+          format: uuid
+
+    EventType:
+      type: string
+      enum: 
+        - "product.availability-confirmed"
+        - "product.availability-declined"
+
+    Status:
+      type: string
+      enum: 
+        - "AVAILABLE"
+        - "UNAVAILABLE"
+        - "OUT_OF_STOCK"
+        - "BACK_ORDER"
+        - "DISCONTINUED"
+
+    ProductAvailabilityConfirmed:
+      type: object
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelope'  
+      properties:
+        data:
+          $ref: '#/components/schemas/Product'
+        type:
+          $ref: '#/components/schemas/EventType'
+      required:
+        - data

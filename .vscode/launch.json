@@ -1,0 +1,23 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "args": [
+        "--spec-file-path",
+        "./docs/Order/1.0.0/asyncapi.yaml",
+        "--dest-file-path",
+        "../src/shared/specs/order/order-v1-models.ts"
+      ],
+      "program": "${file}"
+    }
+  ]
+}

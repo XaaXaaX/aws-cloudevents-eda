@@ -1,0 +1,134 @@
+asyncapi: 3.0.0
+
+info:
+  title: Shipment Service
+  description: | 
+    This service is in charge of packaging and shipment.
+  license: 
+    name: Apache 2.0
+  version: 'v1.0'
+  tags:
+    - name: service
+      description: shipment service
+    - name: domain
+      description: Delivery Management
+
+servers: 
+  product-sns-topic:
+    host: https://events.us-west-2.amazonaws.com
+    description: Amazon Eventbridge Bus.
+    protocol: HTTPS
+
+defaultContentType: application/json
+
+channels:
+  shipmentEventsChannel:
+    address: 'shipment.{shipmentId}'
+    description: All deliuvery and shipment related events are distributed and broadcasted to the interested consumers.
+    title: shipment events channel
+    messages:
+      OrderShipped:
+        summary: Order shipping confirmation event
+        $ref: '#/components/messages/OrderShipped'
+
+operations: 
+  onOrderShipment:
+    summary: Action to confirm an order shipment.
+    description: The shipment confirmation event is the occurerence after an order confirmation.
+    title: order shipment confirmation
+    channel:
+      $ref: '#/channels/shipmentEventsChannel'
+    action: send
+    tags:
+      - name: order
+      - name: shipment
+
+components:
+  messages:
+    OrderShipped:
+      payload:
+        $ref: '#/components/schemas/OrderShipped'
+
+  schemas:
+    shipmentId:
+      description: The unique identifier of an shipment
+      type: string
+      pattern: ^([A-Za-z0-9_-]{21})$
+
+    orderId:
+      description: The unique identifier of an order
+      type: string
+      pattern: ^([A-Za-z0-9_-]{21})$
+
+    userId:
+      description: The unique identifier of a user
+      type: string
+      pattern: ^([A-Za-z0-9_-]{21})$
+    
+    Shipment:
+      required:
+        - shipmentId
+        - orderId
+        - date
+        - userId
+        - status
+      type: object
+      description: shipment model
+      properties:
+        shipmentId:
+          "$ref": "#/components/schemas/shipmentId"
+        date:
+          description: Date of shipment submition.
+          type: string
+          format: date-time
+        userId:
+          "$ref": "#/components/schemas/userId"
+        orderId:
+          "$ref": "#/components/schemas/orderId"
+        status:
+          "$ref": "#/components/schemas/Status"
+      title: Shipment
+
+    EventEnvelope:
+      type: object
+      allOf:
+      - $ref: 'https://raw.githubusercontent.com/cloudevents/spec/v1.0.1/spec.json'
+      properties:
+        id:
+          type: string
+          format: uuid
+        idempotencykey:
+          type: string
+          format: uuid
+        causationid:
+          type: string
+          format: uuid
+
+    EventType:
+      type: string
+      enum: 
+        - "shipment.delivered"
+        - "shipment.shipped"
+        - "shipment.canceled"
+        - "shipment.prepared" 
+
+    Status:
+      type: string
+      enum: 
+        - "Shipped" 
+        - "Canceled" 
+        - "Preapared"
+        - "Delivered"
+
+    OrderShipped:
+      type: object
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelope'
+      properties:
+        data:
+          $ref: '#/components/schemas/Shipment'
+        type:
+          $ref: '#/components/schemas/EventType'
+      required:
+        - data

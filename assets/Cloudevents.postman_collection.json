@@ -1,0 +1,101 @@
+{
+	"info": {
+		"_postman_id": "b1763c81-77c1-47d7-ada8-1a9131bc6956",
+		"name": "Cloudevents",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2556357"
+	},
+	"item": [
+		{
+			"name": "https://xypnr2vnp4.execute-api.eu-west-1.amazonaws.com/live/sqs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `",
+							"<p>Task Status: {{response.done}}</p>",
+							"`;",
+							"",
+							"function constructVisualizerPayload() {",
+							"    return {response: pm.response.json()};",
+							"}",
+							"",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "dkjqhsdksjhdkhdq",
+						"type": "text"
+					},
+					{
+						"key": "causationid",
+						"value": "{{$randomUUID}}",
+						"type": "text"
+					},
+					{
+						"key": "source",
+						"value": "ecommerce.baskets.service",
+						"type": "text"
+					},
+					{
+						"key": "type",
+						"value": "basket.item-approved",
+						"type": "text"
+					},
+					{
+						"key": "id",
+						"value": "{{$randomUUID}}",
+						"type": "text"
+					},
+					{
+						"key": "specversion",
+						"value": "1.0.2",
+						"type": "text"
+					},
+					{
+						"key": "time",
+						"value": "{{$isoTimestamp}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"orderDate\": \"2024-01-01T12:55:00.990Z\",\n    \"price\": 1000,\n    \"quantity\": 2,\n    \"productId\": \"PRD_12345643\",\n    \"userId\": \"{{$randomUUID}}\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://xypnr2vnp4.execute-api.eu-west-1.amazonaws.com/live/sqs",
+					"protocol": "https",
+					"host": [
+						"xypnr2vnp4",
+						"execute-api",
+						"eu-west-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"live",
+						"sqs"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

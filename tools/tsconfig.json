@@ -1,0 +1,35 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "lib": ["ESNext"],
+        "module":"CommonJS",
+        "outDir": "./dist",
+        "typeRoots": ["node_modules/@types"],
+        "baseUrl": "./",
+        "types": [
+            "node",
+        ],
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "removeComments": true,
+        "inlineSourceMap": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "moduleResolution": "node",
+        "alwaysStrict": true,
+        "noImplicitAny": true,
+        "forceConsistentCasingInFileNames": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "allowSyntheticDefaultImports": true,
+    },
+    "exclude": [
+        "esbuild.config.js",
+        "node_modules", 
+        "**/*.spec.ts"],
+    "require": [
+        "ts-node/register/transpile-only"
+    ],
+}

@@ -1,0 +1,18 @@
+*.js
+!jest.config.js
+*.d.ts
+node_modules
+
+!eventcatalog.config.js
+
+!esbuild.config.js
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
+
+.eventcatalog-core
+.next
+out
+dist
+build
