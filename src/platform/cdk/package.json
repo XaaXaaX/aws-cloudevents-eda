@@ -9,7 +9,10 @@
     "watch": "tsc -w",
     "test": "jest",
     "cdk:extension": "cdk --app 'ts-node --prefer-ts-exts ./bin/extension.ts'",
-    "cdk:dev": "npm i && npm run cdk:extension -- --profile serverless -c env=dev"
+    "cdk:extension:dev": "npm i && npm run cdk:extension -- --profile serverless -c env=dev",
+    "cdk:catalog": "cdk --app 'ts-node --prefer-ts-exts ./bin/catalog.ts'",
+    "cdk:catalog:dev": "npm i && npm run cdk:catalog -- --profile serverless -c env=dev"
+
   },
   "devDependencies": {
     "@types/jest": "^29.5.5",

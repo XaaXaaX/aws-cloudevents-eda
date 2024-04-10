@@ -23,11 +23,6 @@ export class TelemetryApiKinesisExtensionStack extends Stack {
     super(scope, id, props);
 
     const eventBus = new EventBus(this, 'EventSchemaCentralEventBus');
-    new CfnDiscoverer(this, 'EventSchemaCentralDiscoverer', {
-      sourceArn: eventBus.eventBusArn,
-    });
-    new CfnRegistry(this, 'EventSchemaCentralRegistry');
-
     const kinesis = new Stream(this, 'TelemetryStream', { streamName: props.streamName });
 
     const schemaRegisteryFunction = new NodejsFunction(this, 'SchemaRegisteryFunction', {

@@ -2,9 +2,9 @@
 
 This folder holds all the code samples supporting the  Event model standards study
 
-## Why define standards on our event models?
+## Why define standards on our event envelope?
 
-Defining event model standards for cross-cells as well as intra-cell communication can provide many benefits as we are building new WL capabilities. By implementing these standards we can greatly improve:
+Defining a standard event envelope not only simplifies and accelerates cross-domain communication but also intra-domain communication, this can provide many benefits including consumption, simplified decision-making, and observability. By implementing these standards we can greatly improve:
 
 * Discoverability and documentation of EDAs
 * The way event consumers are processing events (e.g. Event Filtering)
@@ -14,13 +14,28 @@ Defining event model standards for cross-cells as well as intra-cell communicati
 
 ![samples schema](./assets/diagram.png)
 
-## Deploy
+## Deploy the solution
+The solution has 5 projects that must be deployed in the following order.
+The extension and event schema discovery stack must be deployed first and will be used by application stacks
+
+```shell
+npm run build:extension --prefix src/platform/src
+npm run cdk:extension:dev deploy --prefix src/platform/cdk -- --all --require-approval never
+```
+
+Deploying the application stacks
 
 ```shell
 npm run cdk:orders deploy -- --all --require-approval never
 npm run cdk:products deploy -- --all --require-approval never
 npm run cdk:shipment deploy -- --all --require-approval never
 npm run cdk:notification deploy -- --all --require-approval never
+```
+
+Deploying the Catalog stack will be done by deploying first the Catalog stack followed by the Catalog Pipeline stack.
+
+```shell
+npm run cdk:catalog:dev deploy --prefix src/platform/cdk -- --all --require-approval never
 ```
 
 ## Add a product
@@ -85,14 +100,14 @@ sending via apigatway
 * Per the availability of the product and order confirmation in Order service, Shipment service will ship the package by receiving the `order.confirmed` event.
 * Shipment service will send a `shipment.shipped` event.
 
-## Log insights
+## Cloudwatch Log insights
 
 fields @timestamp, message.id, message.type, message.dataversion, message.recipient, message.source, message.causationid, message.correlationid
 | sort @timestamp desc
 | limit 1000
 | filter ispresent(message.specversion)
 
-## Pie Widget
+## Cloudwatch Pie Widget
 
 fields @timestamp, message.id, message.type, message.dataversion, message.recipient, message.source, message.causationid, message.correlationid
 | sort @timestamp desc
@@ -109,6 +124,8 @@ npm run cdk:orders destroy -- --all
 npm run cdk:products destroy -- --all
 npm run cdk:shipment destroy -- --all 
 npm run cdk:notification destroy -- --all
+npm run cdk:extension:dev destroy --prefix src/platform/cdk -- --all --require-approval never
+npm run cdk:catalog:dev destroy --prefix src/platform/cdk -- --all --require-approval never
 ```
 
 ## Remove Generated folders ( Useful for clean guys )

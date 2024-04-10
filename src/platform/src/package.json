@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@aws-sdk/client-eventbridge": "^3.549.0",
-    "@aws-sdk/client-glue": "^3.549.0",
     "@aws-sdk/client-kinesis": "^3.462.0",
     "https": "^1.0.0",
     "node-fetch": "^2.6.7"

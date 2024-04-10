@@ -1,0 +1,30 @@
+version: 0.2
+
+env:
+  parameter-store:
+    SPEC_BUCKET_NAME: /eventcatalog/bucket/specs/name
+
+phases:
+  install:
+    commands:
+      - echo Installing dependencies...
+      - npm cache clean --force
+      - cd catalog && npm install --froce && cd ..
+
+  pre_build:
+    commands:
+      - echo "Pre build command"
+      - rm -rf specs
+      - mkdir specs
+      - aws s3 sync s3://$SPEC_BUCKET_NAME/ specs
+  build:
+    commands:
+      - cd catalog
+      - npm run prepare
+      - npm run generate
+      - npm run build
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: catalog/out

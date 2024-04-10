@@ -22,3 +22,6 @@ yarn-debug.log*
 yarn-error.log*
 
 .eventcatalog-core
+
+!config.generator.js
+!eventcatalog.config.backup.js

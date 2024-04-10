@@ -1,90 +1,105 @@
-const path = require('path');
-
 module.exports = {
-  title: 'EventCatalog',
-  tagline: 'Discover, Explore and Document your Event Driven Architectures',
-  organizationName: 'Your Company',
-  projectName: 'Event Catalog',
-  editUrl: 'https://github.com/boyney123/eventcatalog-demo/edit/master',
-  trailingSlash: true,
-  primaryCTA: {
-    label: 'Explore Events',
-    href: '/events'
+  "title": "EventCatalog",
+  "tagline": "Discover, Explore and Document your Event Driven Architectures",
+  "organizationName": "Your Company",
+  "projectName": "Event Catalog",
+  "trailingSlash": true,
+  "primaryCTA": {
+    "label": "Explore Events",
+    "href": "/events"
   },
-  secondaryCTA: {
-    label: 'Getting Started',
-    href:"https://www.eventcatalog.dev/"
+  "secondaryCTA": {
+    "label": "Discover Domains",
+    "href": "/domains"
   },
-  logo: {
-    alt: 'EventCatalog Logo',
-    // found in the public dir
-    src: 'logo.svg',
+  "logo": {
+    "alt": "EventCatalog Logo",
+    "src": "logo.svg"
   },
-  headerLinks: [
-    { label: 'Events', href: '/events'},
-    { label: 'Services', href: '/services' },
-    { label: 'Domains', href: '/domains'},
-    { label: 'Users', href: '/users'},
-    { label: 'Visualiser', href: '/visualiser' },
-    { label: '3D Node Graph', href: '/overview' },
-  ],
-  footerLinks: [
-    { label: 'Events', href: '/events' },
-    { label: 'Services', href: '/services' },
-    { label: 'Visualiser', href: '/visualiser' },
-    { label: '3D Node Graph', href: '/overview' },
-    { label: 'GitHub', href: 'https://github.com/boyney123/eventcatalog-demo/edit/master' }
-  ],
-  users: [
+  "headerLinks": [
     {
-      id: 'dboyne',
-      name: 'David Boyne',
-      avatarUrl: 'https://pbs.twimg.com/profile_images/1262283153563140096/DYRDqKg6_400x400.png',
-      role: 'Developer',
+      "label": "Events",
+      "href": "/events"
     },
     {
-      id: 'mSmith',
-      name: 'Matthew Smith',
-      avatarUrl: 'https://randomuser.me/api/portraits/lego/3.jpg',
-      role: 'Developer',
+      "label": "Services",
+      "href": "/services"
     },
+    {
+      "label": "Domains",
+      "href": "/domains"
+    },
+    {
+      "label": "Visualiser",
+      "href": "/visualiser"
+    },
+    {
+      "label": "3D Node Graph",
+      "href": "/overview"
+    }
   ],
-  generators: [
+  "footerLinks": [
+    {
+      "label": "Events",
+      "href": "/events"
+    },
+    {
+      "label": "Services",
+      "href": "/services"
+    },
+    {
+      "label": "Visualiser",
+      "href": "/visualiser"
+    },
+    {
+      "label": "3D Node Graph",
+      "href": "/overview"
+    }
+  ],
+  "users": [
+    {
+      "id": "admin",
+      "name": "Catalog admin ",
+      "avatarUrl": "https://randomuser.me/api/portraits/lego/3.jpg",
+      "role": "Owner"
+    }
+  ],
+  "generators": [
     [
-      '@eventcatalog/plugin-doc-generator-asyncapi',
+      "@eventcatalog/plugin-doc-generator-asyncapi",
       {
-        pathToSpec: [
-          path.join(__dirname, '../specs/Order/1.0.0', 'asyncapi.yaml')
-        ],
-        versionEvents: false,
-        renderNodeGraph: true,
-        renderMermaidDiagram: true,
-        domainName: 'Orders System'
-      },
+        "versionEvents": false,
+        "renderMermaidDiagram": false,
+        "renderNodeGraph": true,
+        "domainName": "Shipment",
+        "pathToSpec": [
+          "/Users/omideidivandi/source/POC/aws-cloudevents-eda/specs/Shipment/1.0.0/asyncapi.yaml"
+        ]
+      }
     ],
     [
-      '@eventcatalog/plugin-doc-generator-asyncapi',
+      "@eventcatalog/plugin-doc-generator-asyncapi",
       {
-        pathToSpec: [
-          path.join(__dirname, '../specs/Product/1.0.0', 'asyncapi.yaml')
-        ],
-        versionEvents: false,
-        renderNodeGraph: true,
-        renderMermaidDiagram: true,
-        domainName: 'Product System'
-      },
+        "versionEvents": false,
+        "renderMermaidDiagram": false,
+        "renderNodeGraph": true,
+        "domainName": "Product",
+        "pathToSpec": [
+          "/Users/omideidivandi/source/POC/aws-cloudevents-eda/specs/Product/1.0.0/asyncapi.yaml"
+        ]
+      }
     ],
     [
-      '@eventcatalog/plugin-doc-generator-asyncapi',
+      "@eventcatalog/plugin-doc-generator-asyncapi",
       {
-        pathToSpec: [
-          path.join(__dirname, '../specs/Shipment/1.0.0', 'asyncapi.yaml')
-        ],
-        versionEvents: false,
-        renderNodeGraph: true,
-        renderMermaidDiagram: true,
-        domainName: 'Shipment System'
-      },
-    ],
+        "versionEvents": false,
+        "renderMermaidDiagram": false,
+        "renderNodeGraph": true,
+        "domainName": "Order",
+        "pathToSpec": [
+          "/Users/omideidivandi/source/POC/aws-cloudevents-eda/specs/Order/1.0.0/asyncapi.yaml"
+        ]
+      }
+    ]
   ]
 }
