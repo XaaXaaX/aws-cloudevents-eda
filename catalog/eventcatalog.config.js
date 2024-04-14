@@ -68,19 +68,19 @@ module.exports = {
     [
       "@eventcatalog/plugin-doc-generator-asyncapi",
       {
-        "versionEvents": false,
+        "versionEvents": true,
         "renderMermaidDiagram": false,
         "renderNodeGraph": true,
-        "domainName": "Shipment",
+        "domainName": "Order",
         "pathToSpec": [
-          "/Users/omideidivandi/source/POC/aws-cloudevents-eda/specs/Shipment/1.0.0/asyncapi.yaml"
+          "/Users/omideidivandi/source/POC/aws-cloudevents-eda/specs/Order/1.0.0/asyncapi.yaml"
         ]
       }
     ],
     [
       "@eventcatalog/plugin-doc-generator-asyncapi",
       {
-        "versionEvents": false,
+        "versionEvents": true,
         "renderMermaidDiagram": false,
         "renderNodeGraph": true,
         "domainName": "Product",
@@ -92,12 +92,12 @@ module.exports = {
     [
       "@eventcatalog/plugin-doc-generator-asyncapi",
       {
-        "versionEvents": false,
+        "versionEvents": true,
         "renderMermaidDiagram": false,
         "renderNodeGraph": true,
-        "domainName": "Order",
+        "domainName": "Shipment",
         "pathToSpec": [
-          "/Users/omideidivandi/source/POC/aws-cloudevents-eda/specs/Order/1.0.0/asyncapi.yaml"
+          "/Users/omideidivandi/source/POC/aws-cloudevents-eda/specs/Shipment/1.0.0/asyncapi.yaml"
         ]
       }
     ]

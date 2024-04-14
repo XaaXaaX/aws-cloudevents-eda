@@ -40,6 +40,9 @@ npm run cdk:catalog:dev deploy --prefix src/platform/cdk -- --all --require-appr
 
 > The repository has a github action to sync the specification in `specs` folder for any service ( this let simulate how to synchronize specs from many repositories into the spec s3 bucket), the github action needs the AWS credentials to be setup for the repository or organization, you can use an idp but for this example we need to add two secrets for the repository, AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
 
+> The workflow is configured to be triggered only for specs path on main branche
+
+
 ## Add a product
 
 ```json

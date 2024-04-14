@@ -6,8 +6,8 @@
     "start": "eventcatalog start",
     "dev": "eventcatalog dev",
     "build": "eventcatalog build",
+    "pregenerate": "node ./config.generator.js",
     "generate": "eventcatalog generate",
-    "prepare": "node ./config.generator.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {

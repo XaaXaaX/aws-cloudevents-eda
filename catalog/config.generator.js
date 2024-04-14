@@ -2,7 +2,7 @@ const path = require('path')
 const fs = require('fs');
 const { globSync } = require("glob");
 
-const defaultConfig = {
+const baseConfig = {
   title: 'EventCatalog',
   tagline: 'Discover, Explore and Document your Event Driven Architectures',
   organizationName: 'Your Company',
@@ -34,8 +34,8 @@ const defaultConfig = {
   ]
 }
 
-const config = {
-  versionEvents: false,
+const generatorDefaultConfig = {
+  versionEvents: true,
   renderMermaidDiagram: false,
   renderNodeGraph: true
 }
@@ -45,8 +45,11 @@ const getDirectories = (src) => {
 };
 
 const createGenerators = (specsFolder = 'specs') => {
-  const schemasOnDisk = getDirectories(specsFolder); // fs.readdirSync(path.join(__dirname, specsFolder));
-  const schemas = schemasOnDisk.filter((fileName) => fileName.includes('.yaml'));
+  const schemas = getDirectories(specsFolder)?.
+    sort((a, b) => b.localeCompare(a) ).
+    reverse().
+    filter((fileName) => fileName.includes('.yaml'));
+    
   if (!schemas) return [];
 
   let asyncApiGenerators = [];
@@ -54,7 +57,7 @@ const createGenerators = (specsFolder = 'specs') => {
     asyncApiGenerators.push([
       '@eventcatalog/plugin-doc-generator-asyncapi',
       {
-        ...config,
+        ...generatorDefaultConfig,
         domainName: schemaName.split('/')[2],
         pathToSpec: [ 
           path.join(__dirname, `${schemaName}`) 
@@ -70,6 +73,6 @@ const generators = createGenerators('../specs');
 
 fs.writeFileSync('./eventcatalog.config.js', 
   `module.exports = ${JSON.stringify({
-    ...defaultConfig,
+    ...baseConfig,
     generators
   }, null, 2)}`, 'utf8');

@@ -20,7 +20,6 @@ phases:
   build:
     commands:
       - cd catalog
-      - npm run prepare
       - npm run generate
       - npm run build
 
