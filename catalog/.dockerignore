@@ -5,3 +5,5 @@ npm-debug.log
 README.md
 .next
 .eventcatalog-core
+!config.generator.js
+!eventcatalog.config.backup.js

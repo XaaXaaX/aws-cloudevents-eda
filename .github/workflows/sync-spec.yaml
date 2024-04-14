@@ -2,6 +2,8 @@ name: AsyncApi Spec Sync
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'specs/**'
       
 env:
   AWS_REGION: eu-west-1
